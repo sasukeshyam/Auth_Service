@@ -19,6 +19,26 @@ class UserService {
         }
     }
 
+    async signIn(email, planePassword) {
+        try {
+            // step1 - fetch the user using his email
+            const user = await this.userRepository.getByEmail(email);
+            // step2 - compare the incoming password with the stored encrypted password
+            const passwordsMatch = this.checkPassword(planePassword, user.password);
+            if(!passwordsMatch) {
+                console.log("Password doesn't match");
+                throw {error: "Incorrect Password"};
+            }
+            // step3 - if password match then create a token and send it to the user
+            const newJWT = this.createToken({email: user.email, id: user.id});
+            return newJWT;
+
+        } catch (error) {
+            console.log('Something went wronge on Service layer');
+            throw error;
+        }
+    }
+
     async destroy(userId) {
         try {
             const response = this.userRepository.destroy({
@@ -36,7 +56,7 @@ class UserService {
     createToken(user) {
         try {
             const result = jwt.sign(user, JWT_KEY, {expiresIn: '1h'});
-            return result;
+            return result; 
         } catch (error) {
             console.log('Something went wronge on token creation');
             throw error;

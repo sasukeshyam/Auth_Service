@@ -17,5 +17,10 @@ router.post(
     UserController.sighIn
 );
 
+router.get(
+    '/isAuthenticated',
+    UserController.isAuthenticated
+);
+
 
 module.exports = router;

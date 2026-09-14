@@ -26,12 +26,29 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: true
         }
     },
+
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         len: [3, 10]
       }
+    },
+
+    isVerified: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+
+    verificationToken: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+
+    verificationTokenExpiresAt: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     sequelize,

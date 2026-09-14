@@ -22,5 +22,10 @@ router.get(
     UserController.isAuthenticated
 );
 
+router.get(
+    '/verify-email',
+    UserController.verifyEmail
+);
+
 
 module.exports = router;

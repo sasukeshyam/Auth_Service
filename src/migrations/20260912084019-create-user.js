@@ -31,7 +31,23 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      isVerified: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
+
+      verificationToken: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+
+      verificationTokenExpiresAt: {
+        type: Sequelize.DATE,
+        allowNull: true
       }
+      
     });
   },
   async down(queryInterface, Sequelize) {

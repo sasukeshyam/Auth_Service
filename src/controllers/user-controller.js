@@ -67,8 +67,33 @@ const isAuthenticated = async (req, res) => {
     }
 }
 
+const verifyEmail = async (req, res) => {
+    try {
+        const { token } = req.query;
+
+        const response = await userService.verifyEmail(token);
+        
+        return res.status(200).json({
+            data: response,
+            success: true,
+            message: 'Email verified successfully',
+            err: {}
+        });
+    } catch (error) {
+        console.log(error);
+
+        return res.status(400).json({
+            data: {},
+            success: false,
+            message: error.message,
+            err: error
+        });
+    }
+}
+
 module.exports = {
     create,
     sighIn,
-    isAuthenticated
+    isAuthenticated,
+    verifyEmail
 }
